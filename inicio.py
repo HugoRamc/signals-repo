@@ -1,10 +1,23 @@
 #importacion de la libreria para realizar interfaces graficas
 from tkinter import *
+import numpy as np
+import matplotlib.pyplot as plt
 
+w = 0
+h=0
 def plotRecta():
 
 	vtnRec = Tk()
 	vtnRec.title("Graficadora Recta")
+	w, h = vtnRec.winfo_screenwidth()/4, vtnRec.winfo_screenheight()/4
+	vtnRec.geometry("%dx%d+%d+%d" % (600, 400,w,h))
+	#ploteo de la recta usando matplotlib
+
+
+
+
+
+
 
 	vtnRec.mainloop()
 
@@ -13,6 +26,11 @@ def plotRecta():
 def ventanaInicio():
 	#declaracion de la ventana
 	ventana = Tk()
+
+	w, h = ventana.winfo_screenwidth()/4, ventana.winfo_screenheight()/4
+	ventana.geometry("%dx%d+%d+%d" % (600, 400,w,h))
+
+
 	ventana.title("Graficadora Fourier")
 
 	#declaracion de un elemento de tipo etiqueta
@@ -22,16 +40,18 @@ def ventanaInicio():
 
 	#declaracion de los botones para 
 	btnRecta = Button(ventana,text="Recta",command=plotRecta)
-	btnRecta.pack()
-
-	btnSin = Button(ventana,text="Sin function")
-	btnSin.pack()
-
-	btnCos = Button(ventana,text="Cos function")
-	btnCos.pack()
+	btnRecta.place(x=100,y=50)
 
 	btnPar = Button(ventana,text="Parabola Function")
-	btnPar.pack()
+	btnPar.place(x=200,y=50)
+
+	btnSin = Button(ventana,text="Sin function")
+	btnSin.place(x=100,y=200)
+
+	btnCos = Button(ventana,text="Cos function")
+	btnCos.place(x=200,y=200)
+
+	
 
 
 
