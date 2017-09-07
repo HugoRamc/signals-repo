@@ -15,6 +15,34 @@ def plotRecta():
 
 
 
+	txtAmplitud = Text(vtnRec, height=1, width=10)
+	txtAmplitud.place(x=5,y=40)
+	txtAmplitud.pack();
+
+	txtFrecuencia = Text(vtnRec, height=1, width=10)
+	txtFrecuencia.place(x=5,y=40)
+	txtFrecuencia.pack();
+
+	txtpntInicial = Text(vtnRec, height=1, width=10)
+	txtpntInicial.place(x=5,y=40)
+	txtpntInicial.pack();
+
+	txtPeriodo = Text(vtnRec, height=1, width=10)
+	txtPeriodo.place(x=5,y=40)
+	txtPeriodo.pack();
+
+	txtIteraciones = Text(vtnRec, height=1, width=10)
+	txtIteraciones.place(x=5,y=40)
+	txtIteraciones.pack();
+
+	txtpendiente = Text(vtnRec, height=1, width=10)
+	txtpendiente.place(x=0,y=200)
+	txtpendiente.pack();
+
+	txtOrdenada = Text(vtnRec, height=1, width=10)
+	txtOrdenada.place(x=5,y=40)
+	txtOrdenada.pack();
+
 
 
 
@@ -34,8 +62,8 @@ def ventanaInicio():
 	ventana.title("Graficadora Fourier")
 
 	#declaracion de un elemento de tipo etiqueta
-	etiqueta = Label(ventana,text="Hola mundirri")
-	etiqueta.pack()
+	#etiqueta = Label(ventana,text="Hola mundirri")
+	#etiqueta.pack()
 
 
 	#declaracion de los botones para 
