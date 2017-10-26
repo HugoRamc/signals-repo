@@ -1,5 +1,8 @@
 from tkinter import *
 from serieFourierContinua import *
+from transDFourier import *
+from transCFourier import *
+from serieDFourier import *
 class inicio(object):
 		
 	def serieCFourier(self):
@@ -13,7 +16,7 @@ class inicio(object):
 		print("Transformada continua de fourier")
 
 	def transDFourier(self):
-		print("Transformada discreta de fourier")
+		obj = transDFourier()
 
 	def redirige(self):
 		#print("Estas redirigiendo")
