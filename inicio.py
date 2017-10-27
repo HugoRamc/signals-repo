@@ -1,6 +1,6 @@
 from tkinter import *
 from serieFourierContinua import *
-from transDFourier import *
+from transDFour import *
 from transCFourier import *
 from serieDFourier import *
 class inicio(object):
@@ -11,12 +11,15 @@ class inicio(object):
 
 	def serieDFourier(self):
 		print("Serie discreta de fourier")
+		obj = serieDFourier()
 
 	def transCFourier(self):
 		print("Transformada continua de fourier")
+		obj = transCFourier()
 
 	def transDFourier(self):
-		obj = transDFourier()
+		obj = transDFour()
+		
 
 	def redirige(self):
 		#print("Estas redirigiendo")
@@ -27,7 +30,7 @@ class inicio(object):
 		if(self.var.get()==1):
 			if(self.var2.get()==1):
 				self.serieCFourier()
-			elif(self.var2.get()==1):
+			elif(self.var2.get()==2):
 				self.transCFourier()
 			else:
 				print("Elige una opcion entre Transformada o Serie")
@@ -35,7 +38,7 @@ class inicio(object):
 		elif(self.var.get()==2):
 			if(self.var2.get()==1):
 				self.serieDFourier()
-			elif(self.var2.get()==1):
+			elif(self.var2.get()==2):
 				self.transDFourier()
 			else:
 				print("Elige una opcion entre Transformada o Serie")
@@ -45,10 +48,10 @@ class inicio(object):
 	def __init__(self):
 		self.ventInicio = Tk()
 		w, h = self.ventInicio.winfo_screenwidth()/4, self.ventInicio.winfo_screenheight()/4
-		self.ventInicio.geometry("%dx%d+%d+%d" % (600, 400,w,h))
+		self.ventInicio.geometry("%dx%d+%d+%d" % (400, 180,w,h))
 		self.ventInicio.title("Graficadora Fourier")
 		lblTitulo = Label(self.ventInicio,text="Selecciona los valores para iniciar ")
-		lblTitulo.grid(column=11,row=0)
+		lblTitulo.grid(column=10,columnspan=2,row=0)
 		#poner los check buttons
 
 		self.var = IntVar()

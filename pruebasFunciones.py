@@ -1,15 +1,16 @@
+from scipy.fftpack import fft
 import matplotlib.pyplot as plt
-from matplotlib.pyplot import *
-import plotly.plotly as py
 import numpy as np
 
-
-arreglo = [ -3. -3.j,  1. +7.j,  2. +8.j,  3. +9.j,  4.+10.j]
-fig,ax = subplots()
-for x in range(len(arreglo)):
-	ax.scatter(arreglo[x].real,arreglo[x].imag)
-
-#for x in range(len(arreglo)):
-    #plt.plot([0,arreglo[x].real],[0,arreglo[x].imag])
-
+# Number of sample points
+N = 600
+# sample spacing
+T = 1.0 / 800.0
+x = np.linspace(0.0, N*T, N)
+#y = np.sin(50.0 * 2.0*np.pi*x) + 0.5*np.sin(80.0 * 2.0*np.pi*x)
+y = np.exp(-x)
+yf = fft(y)
+xf = np.linspace(0.0, 1.0/(2.0*T), N//2)
+plt.plot(xf, 2.0/N * np.abs(yf[0:N//2]))
+plt.grid()
 plt.show()
