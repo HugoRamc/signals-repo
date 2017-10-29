@@ -3,7 +3,7 @@ import tkinter.messagebox
 import numpy as np
 import matplotlib.pyplot as plt
 from graph import * 
-
+from validaStrings import *
 
 class recta(object):
 	
@@ -66,8 +66,34 @@ class recta(object):
 		pntInicial = self.txtpntInicial.get()
 		periodo = self.txtPeriodo.get()
 		sumas = self.txtSumas.get()
+		valida = validaStrings()
 
-		pintar = graph(float(pntInicial)*np.pi,float(periodo)*np.pi,int(sumas))
-		pintar.plotRecta(float(pendiente),float(ordenada))
+		edo = 0
+		if(valida.validaCadena(pendiente)<1):
+			edo = 1
+		if(valida.validaCadena(ordenada)<1):
+			edo = 1
+		if(valida.validaCadena(pntInicial)<1):
+			edo = 1
+		if(valida.validaCadena(periodo)<1):
+			edo = 1
+		if(valida.validaCadena(sumas)<1):
+			edo = 1
+
+		if(edo==0):
+
+			carac = pntInicial.split("*")
+			if(len(carac)>1):
+				npntI = float(carac[0])*np.pi
+			else:
+				npntI = float(pntInicial)
+
+			nper = valida.getValorCadena(periodo)
+			npen = valida.getValorCadena(pendiente)
+			nord = valida.getValorCadena(ordenada)
+
+
+			pintar = graph(npntI,nper,int(sumas))
+			pintar.plotRecta(npen,nord)
 
 		

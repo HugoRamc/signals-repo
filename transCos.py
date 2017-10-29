@@ -3,14 +3,15 @@ from tkinter import *
 import tkinter.messagebox
 import numpy as np
 import matplotlib.pyplot as plt
-
+from scipy.fftpack import fft
+from validaStrings import *
 
 class transCos(object):
 	
 	def __init__(self):
 
 		#self.pendiente = StringVar()
-
+		
 		ventana = Tk()
 		ventana.title("Transformada Función cos(t)")
 		w, h = ventana.winfo_screenwidth()/4, ventana.winfo_screenheight()/4
@@ -36,20 +37,19 @@ class transCos(object):
 		lblOrdenada.grid(column=0,row=3 ,sticky=E)
 		self.txtOrdenada.grid(column=1,row=3)
 
-		lblpntInicial = Label(ventana,text="Introduce el pntInicial del periodo")
-		self.txtpntInicial = Entry(ventana)
-		lblpntInicial.grid(column=0,row=4 ,sticky=E)
-		self.txtpntInicial.grid(column=1,row=4)
+		lblpntFinal = Label(ventana,text="Introduce el punto final de la función")
+		self.txtpntFinal = Entry(ventana)
 
-		lblPeriodo = Label(ventana,text="Introduce el Periodo")
+		lblpntFinal.grid(column=0,row=4 ,sticky=E)
+		self.txtpntFinal.grid(column=1,row=4)
+
+		lblperiodo = Label(ventana,text="Introduce el periodo de muestreo")
 		self.txtPeriodo = Entry(ventana)
-		lblPeriodo.grid(column=0,row=5 ,sticky=E)
-		self.txtPeriodo.grid(column=1,row=5)
 
-		lblSumas = Label(ventana,text="Introduce la cantidad de iteraciones de la serie")
-		self.txtSumas = Entry(ventana)
-		lblSumas.grid(column=0,row=6 ,sticky=E)
-		self.txtSumas.grid(column=1,row=6)
+		lblperiodo.grid(column=0,row=6 ,sticky=E)
+		self.txtPeriodo.grid(column=1,row=6)
+
+
 
 		self.btnGrafica = Button(ventana,text="Graficar",command=self.pintaCos)
 		self.btnGrafica.grid(row=7,columnspan=2)
@@ -59,14 +59,54 @@ class transCos(object):
 
 
 	def pintaCos(self):
-		#print("hola la pendiente es: ",self.txtPendiente.get())
+		edo = 0
 		amplitud = self.txtAmplitud.get()
 		frecuencia = self.txtFrecuencia.get()
 		ordenada = self.txtOrdenada.get()
-		pntInicial = self.txtpntInicial.get()
-		periodo = self.txtPeriodo.get()
-		sumas = self.txtSumas.get()
-		##realizar el desmadre de plotear
+		pntFin = self.txtpntFinal.get()
+		muestreo = self.txtPeriodo.get()
+		#hacemos un llamado a la clase para validar las cadenas
+
+		valida = validaStrings()
+		if(valida.validaCadena(amplitud)<1):
+			edo = 1
+		if(valida.validaCadena(frecuencia)<1):
+			edo = 1
+		if(valida.validaCadena(ordenada)<1):
+			edo = 1
+		if(valida.validaCadena(pntFin)<1):
+			edo = 1
+		if(valida.validaCadena(muestreo)<1):
+			edo = 1
+
+		if edo == 0:
+			namp = valida.getValorCadena(amplitud)
+			nfrec = valida.getValorCadena(frecuencia)
+			nord = valida.getValorCadena(ordenada)
+			npntF = valida.getValorCadena(pntFin)
+			nmues = valida.getValorCadena(muestreo)
+
+			x = np.linspace(0,float(float(npntF)/float(nmues)),npntF)
+			y = namp*np.cos(nfrec*x)+nord
+			yf = fft(y)
+
+			ym = self.magintudesVectores(yf)
+
+			plt.plot(x,ym)
+			plt.grid(True)
+			plt.show()
+		else:
+			print("cadena no aceptada")
+
+
+
+
+	def magintudesVectores(self,lista):	
+		yf  = []
+		for i in range(len(lista)):
+				yf.append(np.sqrt(np.power(lista[i].real,2)+np.power(lista[i].imag,2)))
+
+		return yf
 		
 
 		

@@ -3,7 +3,7 @@ import tkinter.messagebox
 import numpy as np
 import matplotlib.pyplot as plt
 from graph import * 
-
+from validaStrings import *
 
 class fCos(object):
 	
@@ -67,7 +67,34 @@ class fCos(object):
 		periodo = self.txtPeriodo.get()
 		sumas = self.txtSumas.get()
 
-		pintar = graph(float(pntInicial)*np.pi,float(periodo)*np.pi,int(sumas))
-		pintar.plotCos(float(amplitud),float(frecuencia),float(ordenada))
+		valida = validaStrings()
+		edo = 0
+		if(valida.validaCadena(amplitud)==0):
+			edo = 1
+		if(valida.validaCadena(frecuencia)==0):
+			edo = 1
+		if(valida.validaCadena(ordenada)==0):
+			edo = 1
+		if(valida.validaCadena(pntInicial)==0):
+			edo = 1
+		if(valida.validaCadena(periodo)==0):
+			edo = 1
+		if(valida.validaCadena(sumas)==0):
+			edo = 1
+
+		if(edo==0):
+			carac = pntInicial.split("*")
+			if(len(carac)>1):
+				npntI = float(carac[0])*np.pi
+			else:
+				npntI = float(pntInicial)
+
+			nper = valida.getValorCadena(periodo)
+			namp = valida.getValorCadena(amplitud)
+			nfrec = valida.getValorCadena(frecuencia)
+			nord = valida.getValorCadena(ordenada)
+
+			pintar = graph(npntI,nper,int(sumas))
+			pintar.plotCos(namp,nfrec,nord)
 
 		

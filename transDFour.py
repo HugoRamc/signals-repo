@@ -4,6 +4,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from graph import * 
 from scipy.fftpack import fft, ifft
+from validaStrings import *
 
 
 class transDFour(object):
@@ -11,7 +12,7 @@ class transDFour(object):
 	def __init__(self):
 
 		#self.pendiente = StringVar()
-
+		
 		ventana = Tk()
 		ventana.title("Calcular Transformada Discreta de Fourier")
 		w, h = ventana.winfo_screenwidth()/4, ventana.winfo_screenheight()/4
@@ -26,6 +27,11 @@ class transDFour(object):
 		self.txtMuestras = Entry(ventana)
 		lblMuestras.grid(column=0,row=1,sticky=E)
 		self.txtMuestras.grid(column=0, row=2)
+
+		lblMuestreo = Label(ventana,text="Introduce el periodo de muestreo")
+		self.txtMuestreo = Entry(ventana)
+		lblMuestreo.grid(column=0,row=3,sticky=E)
+		self.txtMuestreo.grid(column=0, row=4)
 		
 		self.btnGrafica = Button(ventana,text="Graficar",command=self.calculaTrans)
 		self.btnGrafica.grid(row=7,columnspan=2)
@@ -38,26 +44,41 @@ class transDFour(object):
 		#print("hola la pendiente es: ",self.txtPendiente.get())
 		#espacio = self.txtespacio.get()
 		muestras = self.txtMuestras.get()
+		periodom = self.txtMuestreo.get()
+		valida = validaStrings()
 		lista = muestras.split(",")
 		listanums = []
+		edo = 0
 		for i in range(len(lista)):
-			listanums.append(float(lista[i]))
+			if(valida.validaCadena(lista[i])==1):
+				listanums.append(valida.getValorCadena(lista[i]))
+			else:
+				edo = 1
 
-		#teniendo las muestras procedemos a calcular la transformada discreta de fourier
-		#x = np.linspace(-10,10,float(espacio))
+		if(valida.validaCadena(periodom)==1):
+			nper = (valida.getValorCadena(periodom))
+		else:
+			edo = 1
+		if(edo == 0):
+			
+			y =  fft(lista)			
+			yf = self.magintudesVectores(y)
 
-		y =  fft(lista)
-		#esta funcion nos regresa un arreglo de números complejos, el la linea que sigue se hace el proceso de graficación
-		fig,ax = plt.subplots()
-		for i in range(len(y)):
-			ax.scatter(y[i].real,y[i].imag)
-		plt.suptitle("Transformada Discreta de Fourier para: "+str(len(lista))+" muestras")
-		plt.grid()
-		plt.show()
+			x = np.arange(0,(len(yf)*nper),nper)
+			#print("el numero final es: "+str(len(yf)*nper))
+			print("la longitud de x:" + str(len(x)))
+			print("la lonfitud de y: "+str(len(yf)))
 
-		# ya obtenidas las muestras obtener la transformada discreta de fourier
+			plt.plot(x,yf)
+			plt.grid(True)
+			plt.show()
+		else:
+			print("cadenas no aceptadas")
 		
 		
-		
+	def magintudesVectores(self,lista):	
+		yf  = []
+		for i in range(len(lista)):
+				yf.append(np.sqrt(np.power(lista[i].real,2)+np.power(lista[i].imag,2)))
 
-#obj = transDFour()
+		return yf

@@ -3,7 +3,7 @@ import tkinter.messagebox
 import numpy as np
 import matplotlib.pyplot as plt
 from graph import * 
-
+from validaStrings import*
 
 class fexp(object):
 	
@@ -66,8 +66,35 @@ class fexp(object):
 		pntInicial = self.txtpntInicial.get()
 		periodo = self.txtPeriodo.get()
 		sumas = self.txtSumas.get()
+		#realizamos la validacion de las entradas del usuario
+		valida = validaStrings()
+		edo = 0
+		if(valida.validaCadena(amplitud)==0):
+			edo = 1
+		if(valida.validaCadena(frecuencia)==0):
+			edo = 1
+		if(valida.validaCadena(ordenada)==0):
+			edo = 1
+		if(valida.validaCadena(pntInicial)==0):
+			edo = 1
+		if(valida.validaCadena(periodo)==0):
+			edo = 1
+		if(valida.validaCadena(sumas)==0):
+			edo = 1
 
-		pintar = graph(float(pntInicial)*np.pi,float(periodo)*np.pi,int(sumas))
-		pintar.plotExponencial(float(amplitud),float(frecuencia),float(ordenada))
+		if(edo==0):
+			carac = pntInicial.split("*")
+			if(len(carac)>1):
+				npntI = float(carac[0])*np.pi
+			else:
+				npntI = float(pntInicial)
+
+			nper = valida.getValorCadena(periodo)
+			namp = valida.getValorCadena(amplitud)
+			nfrec = valida.getValorCadena(frecuencia)
+			nord = valida.getValorCadena(ordenada)
+
+			pintar = graph(npntI,nper,int(sumas))
+			pintar.plotExponencial(namp,nfrec,nord)
 
 		

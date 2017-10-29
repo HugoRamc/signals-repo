@@ -37,7 +37,7 @@ class graph(object):
 		plt.plot(t, y)
 
 		plt.ylabel('Serie de Fourier')
-		plt.grid()
+		plt.grid(True)
 		plt.show()
 
 
@@ -67,7 +67,7 @@ class graph(object):
 		plt.plot(t, y)
 
 		plt.ylabel('Serie de Fourier')
-		plt.grid()
+		plt.grid(True)
 		plt.show()
 
 	def plotRecta(self,pendiente=1,ordenada=0):
@@ -94,7 +94,7 @@ class graph(object):
 		plt.plot(t, y)
 
 		plt.ylabel('Serie de Fourier')
-		plt.grid()
+		plt.grid(True)
 		plt.show()
 
 	def plotSen(self,amplitud=1,frecuencia=1,ordenada = 0):
@@ -123,7 +123,7 @@ class graph(object):
 		plt.plot(t, y)
 
 		plt.ylabel('Serie de Fourier')
-		plt.grid()
+		plt.grid(True)
 		plt.show()
 
 	def plotCos(self,amplitud=1,frecuencia=1,ordenada = 0):
@@ -150,7 +150,7 @@ class graph(object):
 		plt.plot(t, y)
 
 		plt.ylabel('Serie de Fourier')
-		plt.grid()
+		plt.grid(True)
 		plt.show()
 
 #ploteo = graph()

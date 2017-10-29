@@ -1,7 +1,10 @@
 from tkinter import *
 import numpy as np
 from scipy.fftpack import fft,ifft
+from transRecta  import *
+from transSin import *
 from transCos import *
+from transExp import *
 
 class transCFourier(object):
 
@@ -11,19 +14,16 @@ class transCFourier(object):
 
 	#estas cuatro funciones son para llamar a las clases que contienen los cuadros de texto para graficar la serie de fourier
 	def plotRecta(self):
-		#obj = recta()
-		pass
+		obj = transRecta()
 
 	def plotSen(self):
-		pass
-		#obj = fSeno()
+		obj = transSin()
 
 	def plotCos(self):
 		obj = transCos()
 
 	def plotExp(self):
-		pass
-		#obj = fexp()
+		obj = transExp()
 
 
 #funcion para iniciar la ventana
@@ -56,6 +56,3 @@ class transCFourier(object):
 		btnCos.place(x=200,y=200)
 
 		ventana.mainloop()
-
-
-obj = transCFourier()
