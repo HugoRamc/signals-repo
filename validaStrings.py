@@ -74,18 +74,14 @@ class validaStrings(object):
 	def getValorCadena(self,cadena):
 		salida = 0.0
 		##dado a la gramatica de solo se pueden tener cadenas que tengan el formato "num*pi" o "num"
-		if cadena[0] == "-":
-			return -1*np.inf
-		elif cadena == "inf":
-			return np.inf
+		
+		aux = cadena.split("*")
+			#si se realizó el split, indica que el usuario escribió pi como parámetro, por lo que 
+		if (len(aux)>1):
+			salida = float(aux[0])*np.pi
 		else:
-			aux = cadena.split("*")
-				#si se realizó el split, indica que el usuario escribió pi como parámetro, por lo que 
-			if (len(aux)>1):
-				salida = float(aux[0])*np.pi
-			else:
-				salida = float(cadena)
-			return salida		
+			salida = float(cadena)
+		return salida		
 
 #obj = validaStrings()
 #val = obj.validaCadena("0.1")

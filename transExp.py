@@ -35,17 +35,17 @@ class transExp(object):
 		lblOrdenada.grid(column=0,row=3 ,sticky=E)
 		self.txtOrdenada.grid(column=1,row=3)
 
-		lblpntFinal = Label(ventana,text="Introduce el punto final de la función")
+		lblpntFinal = Label(ventana,text="Introduce el punto inicial para graficar")
 		self.txtpntFinal = Entry(ventana)
 
 		lblpntFinal.grid(column=0,row=4 ,sticky=E)
 		self.txtpntFinal.grid(column=1,row=4)
 
-		lblperiodo = Label(ventana,text="Introduce el periodo de muestreo")
-		self.txtPeriodo = Entry(ventana)
+		#lblperiodo = Label(ventana,text="Introduce el periodo de muestreo")
+		#self.txtPeriodo = Entry(ventana)
 
-		lblperiodo.grid(column=0,row=6 ,sticky=E)
-		self.txtPeriodo.grid(column=1,row=6)
+		#lblperiodo.grid(column=0,row=6 ,sticky=E)
+		#self.txtPeriodo.grid(column=1,row=6)
 
 
 		self.btnGrafica = Button(ventana,text="Graficar",command=self.pintaExp)
@@ -61,8 +61,7 @@ class transExp(object):
 		amplitud = self.txtAmplitud.get()
 		frecuencia = self.txtFrecuencia.get()
 		ordenada = self.txtOrdenada.get()
-		pntFin = self.txtpntFinal.get()
-		muestreo = self.txtPeriodo.get()
+		pntIni = self.txtpntFinal.get()
 
 		valida = validaStrings()
 		if(valida.validaCadena(amplitud)<1):
@@ -71,25 +70,24 @@ class transExp(object):
 			edo = 1
 		if(valida.validaCadena(ordenada)<1):
 			edo = 1
-		if(valida.validaCadena(pntFin)<1):
-			edo = 1
-		if(valida.validaCadena(muestreo)<1):
+		if(valida.validaCadena(pntIni)<1):
 			edo = 1
 
 		if edo == 0:
 			namp = valida.getValorCadena(amplitud)
 			nfrec = valida.getValorCadena(frecuencia)
 			nord = valida.getValorCadena(ordenada)
-			npntF = valida.getValorCadena(pntFin)
-			nmues = valida.getValorCadena(muestreo)
+			npntI = int(valida.getValorCadena(pntIni))
+			nmues = 200
 
-			x = np.linspace(0,float(float(npntF)/float(nmues)),npntF)
-			y = namp*np.exp(nfrec*x)+nord
-			yf = fft(y)
+			w = np.linspace(npntI-5,(np.abs(npntI)+5),nmues)
+			#y = w
+			y = (namp*(np.exp(nfrec)/np.sqrt((np.power(w,2)+np.power(nfrec,2))))) + nord/w
+			#yf = fft(y)
 
-			ym = self.magintudesVectores(yf)
+			#ym = self.magintudesVectores(yf)
 
-			plt.plot(x,ym)
+			plt.plot(w,y)
 			plt.grid(True)
 			plt.show()
 		else:
@@ -103,3 +101,4 @@ class transExp(object):
 
 		return yf
 
+#obj = transExp()

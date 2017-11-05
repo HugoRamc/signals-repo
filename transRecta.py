@@ -39,17 +39,11 @@ class transRecta(object):
 		#lblpntInicial.grid(column=0,row=3 ,sticky=E)
 		#self.txtpntInicial.grid(column=1,row=3)
 
-		lblpntFinal = Label(vtnRec,text="Introduce el punto final de la función")
+		lblpntFinal = Label(vtnRec,text="Introduce el punto inicial para graficar")
 		self.txtpntFinal = Entry(vtnRec)
 
 		lblpntFinal.grid(column=0,row=4 ,sticky=E)
 		self.txtpntFinal.grid(column=1,row=4)
-
-		lblperiodo = Label(vtnRec,text="Introduce el periodo de muestreo")
-		self.txtPeriodo = Entry(vtnRec)
-
-		lblperiodo.grid(column=0,row=6 ,sticky=E)
-		self.txtPeriodo.grid(column=1,row=6)
 
 		self.btnGrafica = Button(vtnRec,text="Graficar",command=self.pintaRecta)
 		self.btnGrafica.grid(row=8,columnspan=2)
@@ -64,7 +58,6 @@ class transRecta(object):
 		ordenada = self.txtOrdenada.get()
 		#pntInicial = self.txtpntInicial.get()
 		pntFinal = self.txtpntFinal.get()
-		muestreo = self.txtPeriodo.get()
 		valida = validaStrings()
 		
 		edo = 0
@@ -74,26 +67,22 @@ class transRecta(object):
 			edo = 1
 		#if(valida.validaCadena(pntInicial)!=1):
 		#	edo = 1
-		if(valida.validaCadena(muestreo)!=1):
-			edo = 1
-		if(valida.getValorCadena(pntFinal)<1):
+		if(valida.getValorCadena(pntFinal)>1):
 			edo = 1
 
 		if(edo ==0):
 			npen = valida.getValorCadena(pendiente)
 			nord = valida.getValorCadena(ordenada)
 			#npntI = valida.getValorCadena(pntInicial)
-			nmues = valida.getValorCadena(muestreo)
+			nmues = 100
 			nfinal = valida.getValorCadena(pntFinal)
 
 
-			x = np.linspace(0,float(float(nfinal)/float(nmues)),nfinal)
-			y = npen *x +nord
-			yf = fft(y)
+			w = np.linspace(nfinal-5,np.abs(nfinal)+5,nmues)
+			y = (npen/np.power(w,2)) +nord/w
+			
 
-			ym = self.magintudesVectores(yf)
-
-			plt.plot(x,ym)
+			plt.plot(w,y)
 			plt.grid(True)
 			plt.show()
 		else:
@@ -107,3 +96,4 @@ class transRecta(object):
 
 		return yf
 
+obj = transRecta()

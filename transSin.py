@@ -35,17 +35,12 @@ class transSin(object):
 		lblOrdenada.grid(column=0,row=3 ,sticky=E)
 		self.txtOrdenada.grid(column=1,row=3)
 
-		lblpntFinal = Label(ventana,text="Introduce el punto final de la función")
+		lblpntFinal = Label(ventana,text="Introduce el punto inicial para graficar")
 		self.txtpntFinal = Entry(ventana)
 
 		lblpntFinal.grid(column=0,row=4 ,sticky=E)
 		self.txtpntFinal.grid(column=1,row=4)
 
-		lblperiodo = Label(ventana,text="Introduce el periodo de muestreo")
-		self.txtPeriodo = Entry(ventana)
-
-		lblperiodo.grid(column=0,row=6 ,sticky=E)
-		self.txtPeriodo.grid(column=1,row=6)
 
 
 
@@ -63,7 +58,6 @@ class transSin(object):
 		frecuencia = self.txtFrecuencia.get()
 		ordenada = self.txtOrdenada.get()
 		pntFin = self.txtpntFinal.get()
-		muestreo = self.txtPeriodo.get()
 		#hacemos una llamada a la clase de validacion de strings
 		valida = validaStrings()
 		if(valida.validaCadena(amplitud)<1):
@@ -74,23 +68,18 @@ class transSin(object):
 			edo = 1
 		if(valida.validaCadena(pntFin)<1):
 			edo = 1
-		if(valida.validaCadena(muestreo)<1):
-			edo = 1
 
 		if edo == 0:
 			namp = valida.getValorCadena(amplitud)
 			nfrec = valida.getValorCadena(frecuencia)
 			nord = valida.getValorCadena(ordenada)
 			npntF = valida.getValorCadena(pntFin)
-			nmues = valida.getValorCadena(muestreo)
+			nmues = 100
 
-			x = np.linspace(0,float(float(npntF)/float(nmues)),npntF)
-			y = namp*np.sin(nfrec*x)+nord
-			yf = fft(y)
+			w = np.linspace(npntF-5,np.abs(npntF)+5,nmues)
+			y = namp*(1/2)*(-nfrec/(np.power(w,2)-np.power(nfrec,2)))+ nord/w
 
-			ym = self.magintudesVectores(yf)
-
-			plt.plot(x,ym)
+			plt.plot(w,y)
 			plt.grid(True)
 			plt.show()
 		else:
